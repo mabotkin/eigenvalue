@@ -9,7 +9,7 @@ BIG = 12
 # currently only supports 2x2
 def factors(n):
 	if n == 0:
-		return 0
+		return [0]
 	return list(reduce(list.__add__,([i, n//i] for i in range(1, int(n**0.5) + 1) if n % i == 0)))
 
 def genMat(e1, e2):
@@ -33,6 +33,8 @@ def genMat(e1, e2):
 			b *= neg
 		else:
 			c *= neg
+		if random.random() < 0.5:
+			b, c = c, b
 		if abs(a) < BIG and abs(b) < BIG and abs(c) < BIG and abs(d) < BIG:
 			break
 	return [[a, b],[c, d]]
@@ -74,6 +76,7 @@ while True:
 		print "Time Elapsed: " + str(toc-tic) + " seconds."
 		scores.append(toc-tic)
 	except KeyboardInterrupt:
+		print
 		print "Number Correct: " + str(len(scores))
 		if len(scores) != 0:
 			print "Average Time: " + str(sum(scores)/float(len(scores))) + " seconds."
