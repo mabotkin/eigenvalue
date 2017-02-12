@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<title>Eigenvalue Game</title>
+	</head>
+	<body>
+		<script>
+			function joinGame()
+			{
+				var id = document.getElementById("join").value;
+				window.location.href = "/games/" + id;
+			}
+		</script>
+		<center>
+			<h1>Eigenvalue Game</h1>
+			<a href="/newgame"><button>New Game</button></a>
+			<br>
+			<input id=join type=text></input><button onclick="joinGame()">Join Game</button>
+		</center>
+	</body>
+</html>

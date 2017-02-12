@@ -18,7 +18,7 @@ def genID(length):
 
 @app.route("/")
 def root():
-    return app.send_static_file('static/index.html')
+    return render_template('index.html')
 
 @app.route("/newgame")
 def newGame():
@@ -28,7 +28,10 @@ def newGame():
 
 @app.route("/games/<game_ID>")
 def gameRoom(game_ID):
-	return render_template("game.html", gameID = game_ID)
+	if game_ID in games:
+		return render_template("game.html", gameID = game_ID)
+	else:
+		return render_template("notfound.html", gameID = game_ID)
 	
 
 if __name__ == "__main__":
