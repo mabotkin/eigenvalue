@@ -1,5 +1,6 @@
-from flask import Flask, redirect, render_template
-from flask_socketio import SocketIO, join_room
+from flask import Flask, redirect, render_template, request
+from flask_socketio import SocketIO, emit
+import uuid
 import random
 
 app = Flask(__name__)
@@ -23,7 +24,7 @@ def root():
 @app.route("/newgame")
 def newGame():
 	ID = genID(GAME_ID_LENGTH)
-	games[ID] = {}
+	games[ID] = {"players":{},"data":{}}
 	return redirect("/games/" + ID)
 
 @app.route("/games/<game_ID>")
@@ -33,11 +34,23 @@ def gameRoom(game_ID):
 	else:
 		return render_template("notfound.html", gameID = game_ID)
 
-@socketio.on("game")
+@socketio.on("joinGame")
 def join_Game(data):
-	join_room(data["id"])
-	#games[data["id"]]
-	# need to uniquely identify players
+	if request.sid not in games[data["id"]]["players"]:
+		newPlayer = {}
+		newPlayer["username"] = data["name"]
+		newPlayer["score"] = 0
+		games[data["id"]]["players"][request.sid] = newPlayer
+		emit("update",games[data["id"]]["players"])
+		print games
+
+@socketio.on("disconnect")
+def disc():
+	for game in games:
+		if request.sid in games[game]["players"]:
+			game["players"].pop(request.sid,None)
+			emit("update",games[game]["players"])
+	print games
 
 if __name__ == "__main__":
     socketio.run(app,port=5001, debug=True)

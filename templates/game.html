@@ -11,7 +11,7 @@
 		var socket = io.connect();
 		socket.on('connect', function()
 		{
-   			socket.emit('game', {id: gameID, name: username});
+			socket.emit('joinGame', {id: gameID, name: username});
 		});
 		</script>
 		<h1>This is Game {{ gameID }}</h1>
