@@ -34,10 +34,6 @@ def gameRoom(game_ID):
 	else:
 		return render_template("notfound.html", gameID = game_ID)
 
-@socketio.on("connect")
-def con():
-	print request.sid + " connected"
-
 @socketio.on("joinGame")
 def join_Game(data):
 	print request.sid + " joined game"
