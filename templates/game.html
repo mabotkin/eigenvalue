@@ -9,9 +9,14 @@
 		//
 		var gameID = "{{ gameID }}";
 		var socket = io.connect();
+		var players = undefined;
 		socket.on('connect', function()
 		{
 			socket.emit('joinGame', {id: gameID, name: username});
+		});
+		socket.on('update', function(data)
+		{
+			players = data;
 		});
 		</script>
 		<h1>This is Game {{ gameID }}</h1>

@@ -34,22 +34,30 @@ def gameRoom(game_ID):
 	else:
 		return render_template("notfound.html", gameID = game_ID)
 
+@socketio.on("connect")
+def con():
+	print request.sid + " connected"
+
 @socketio.on("joinGame")
 def join_Game(data):
+	print request.sid + " joined game"
 	if request.sid not in games[data["id"]]["players"]:
 		newPlayer = {}
 		newPlayer["username"] = data["name"]
 		newPlayer["score"] = 0
 		games[data["id"]]["players"][request.sid] = newPlayer
-		emit("update",games[data["id"]]["players"])
+		for user in games[data["id"]]["players"]:
+			emit("update",games[data["id"]]["players"], room=user)
 		print games
 
 @socketio.on("disconnect")
 def disc():
+	print request.sid + " left game"
 	for game in games:
 		if request.sid in games[game]["players"]:
-			game["players"].pop(request.sid,None)
-			emit("update",games[game]["players"])
+			games[game]["players"].pop(request.sid,None)
+			for user in games[game]["players"]:
+				emit("update",games[game]["players"], room=user)
 	print games
 
 if __name__ == "__main__":
