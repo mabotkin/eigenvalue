@@ -46,6 +46,10 @@ def join_Game(data):
 			emit("update",games[data["id"]]["players"], room=user)
 		print games
 
+@socketio.on("connect")
+def con():
+	print "connected"
+
 @socketio.on("disconnect")
 def disc():
 	print request.sid + " left game"

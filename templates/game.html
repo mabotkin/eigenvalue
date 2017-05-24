@@ -8,7 +8,7 @@
 		var username = prompt("Enter your display name:", "Anonymous");
 		//
 		var gameID = "{{ gameID }}";
-		var socket = io.connect();
+		var socket = io.connect(null,{rememberTransport : false});
 		var players = undefined;
 		socket.on('connect', function()
 		{
