@@ -1,22 +1,29 @@
-<html>
-	<head>
-		<title>Eigenvalue Game</title>
-	</head>
-	<body>
-		<script>
-			function joinGame()
-			{
-				var id = document.getElementById("join").value;
-				window.location.href = "/games/" + id;
-			}
-		</script>
-		<center>
-			<h1>Eigenvalue Game</h1>
-			<a href="/newgame"><button>New Game</button></a>
-			<br>
-			<input id=join type=text></input><button onclick="joinGame()">Join Game</button>
-			<br>
-			<p>Note: Game ID's are case sensitive.</p>
-		</center>
-	</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+   Eigenvalue Game
+{% endblock%}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+   <center>
+   	<h1>Eigenvalue Game</h1>
+   	<a href="/newgame"><button>New Game</button></a>
+   	<br>
+   	<input id=join type=text></input><button onclick="joinGame()">Join Game</button>
+   	<br>
+   	<p>Note: Game ID's are case sensitive.</p>
+   </center>
+{% endblock %}
+
+{% block bodyscripts %}
+	<script>
+		function joinGame()
+		{
+			var id = document.getElementById("join").value;
+			window.location.href = "/games/" + id;
+		}
+	</script>
+{% endblock %}
