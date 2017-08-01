@@ -1,9 +1,16 @@
-<html>
-	<head>
-		<title>Game {{ gameID }}</title>
-	</head>
-	<body>
-		<p>Game {{ gameID }} was not found.</p>
-		<a href="/">Return to Homepage</a>
-	</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+   Game {{ gameID }}
+{% endblock%}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+	<p>Game {{ gameID }} was not found.</p>
+	<a href="/">Return to Homepage</a>
+{% endblock %}
+
+{% block bodyscripts %}
+{% endblock %}

@@ -1,24 +1,31 @@
-<html>
-	<head>
-		<title>Game {{ gameID }}</title>
-	</head>
-	<body>
-		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-		<script>
-		var username = prompt("Enter your display name:", "Anonymous");
-		//
-		var gameID = "{{ gameID }}";
-		var socket = io.connect(null,{rememberTransport : false});
-		var players = undefined;
-		socket.on('connect', function()
-		{
-			socket.emit('joinGame', {id: gameID, name: username});
-		});
-		socket.on('update', function(data)
-		{
-			players = data;
-		});
-		</script>
-		<h1>This is Game {{ gameID }}</h1>
-	</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+   Game {{ gameID }}
+{% endblock%}
+
+{% block head %}
+   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+{% endblock %}
+
+{% block body %}
+   <h1>This is Game {{ gameID }}</h1>
+{% endblock %}
+
+{% block bodyscripts %}
+	<script>
+	var username = prompt("Enter your display name:", "Anonymous");
+
+	var gameID = "{{ gameID }}";
+	var socket = io.connect(null,{rememberTransport : false});
+	var players = undefined;
+	socket.on('connect', function()
+	{
+		socket.emit('joinGame', {id: gameID, name: username});
+	});
+	socket.on('update', function(data)
+	{
+		players = data;
+	});
+	</script>
+{% endblock %}
